@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WorkoutPageExample</string>
+    <string name="go_home">Go Home</string>
+    <string name="_2nd_layout">2nd Layout</string>
+</resources>
