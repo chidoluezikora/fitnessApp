@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+<View
+    android:id="@+id/view"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    android:background="@android:color/holo_blue_bright"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardView2"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:layout_margin="30dp"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="30dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/view"
+    tools:layout_editor_absoluteX="30dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_baseline_person_pin_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Google Login"
+            android:textAlignment="center"
+            android:textSize="40sp" />
+
+
+            <LinearLayout
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="11dp"
+                    android:src="@drawable/google_button" />
+
+                <Button
+                    android:id="@+id/signInButton"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:text="Sign up with Google"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:paddingRight="10sp" />
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
