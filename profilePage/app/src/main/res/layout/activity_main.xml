@@ -8,28 +8,24 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="181dp"
-        android:layout_height="153dp"
-        app:srcCompat="@android:drawable/ic_notification_overlay"
-        tools:layout_editor_absoluteX="558dp"
-        tools:layout_editor_absoluteY="632dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="805dp"
-        android:layout_height="285dp"
+        android:id="@+id/backgroundUp"
+        android:layout_width="412dp"
+        android:layout_height="288dp"
+        android:layout_marginBottom="446dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteY="-6dp"
         tools:srcCompat="@color/BS2" />
 
     <EditText
         android:id="@+id/userName"
         android:layout_width="285dp"
         android:layout_height="80dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="188dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
@@ -37,13 +33,15 @@
         android:textColor="#000000"
         android:textSize="34sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="76dp"
-        tools:layout_editor_absoluteY="178dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/achieveText"
         android:layout_width="347dp"
         android:layout_height="53dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="290dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
@@ -51,122 +49,173 @@
         android:textAllCaps="false"
         android:textColor="#1C2331"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="290dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/yourWeeklySumText"
         android:layout_width="285dp"
         android:layout_height="69dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="592dp"
+        android:layout_marginBottom="70dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Your weekly summary"
         android:textColor="#1C2331"
         android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="588dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar3"
         style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
         android:layout_width="313dp"
         android:layout_height="61dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="642dp"
         android:indeterminate="false"
         android:max="100"
         android:progress="70"
         android:progressTint="#0C7B93"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="642dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/heihtAndWeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/heightAndWeight"
+        android:layout_width="210dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="243dp"
+        android:layout_marginBottom="464dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="175cm            65kg"
         android:textColor="#000000"
-        tools:layout_editor_absoluteX="121dp"
-        tools:layout_editor_absoluteY="243dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profilePic"
-        android:layout_width="173dp"
-        android:layout_height="209dp"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:layout_marginBottom="524dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearanceOverlay="@style/circular"
         app:srcCompat="@drawable/account"
-        tools:layout_editor_absoluteX="119dp"
-        tools:layout_editor_absoluteY="3dp" />
+        app:strokeColor="#0C7B93"
+        app:strokeWidth="4dp" />
 
     <ImageButton
         android:id="@+id/stepsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="169dp"
+        android:layout_marginTop="525dp"
         android:background="@null"
-        app:srcCompat="@drawable/footprint_svgrepo_com"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="525dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/footprint_svgrepo_com" />
 
     <TextView
         android:id="@+id/stepsToday"
         android:layout_width="318dp"
         android:layout_height="59dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="466dp"
         android:text="7200/10000 steps today "
         android:textColor="#0C7B93"
         android:textSize="28sp"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="466dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/goalsAchieved"
         android:layout_width="306dp"
         android:layout_height="51dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="678dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="70% of weekly goals achieved!"
         android:textColor="#1C2331"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="63dp"
-        tools:layout_editor_absoluteY="678dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/progressBar3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/settingsButton"
         android:layout_width="74dp"
         android:layout_height="112dp"
+        android:layout_marginStart="336dp"
+        android:layout_marginTop="4dp"
         android:background="@null"
-        app:srcCompat="@drawable/dots_3_vertical_svgrepo_com"
-        tools:layout_editor_absoluteX="338dp"
-        tools:layout_editor_absoluteY="-5dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dots_3_vertical_svgrepo_com" />
 
     <ImageButton
-        android:id="@+id/imageButton7"
+        android:id="@+id/achievement3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="261dp"
+        android:layout_marginTop="343dp"
         android:background="@null"
-        app:srcCompat="@drawable/diamond_jewel_svgrepo_com"
-        tools:layout_editor_absoluteX="261dp"
-        tools:layout_editor_absoluteY="343dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/diamond_jewel_svgrepo_com" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/achievement2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="343dp"
         android:background="@null"
-        app:srcCompat="@drawable/diamond_jewel_svgrepo_com"
-        tools:layout_editor_absoluteX="150dp"
-        tools:layout_editor_absoluteY="343dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/diamond_jewel_svgrepo_com" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/achievement1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="343dp"
         android:background="@null"
-        app:srcCompat="@drawable/diamond_jewel_svgrepo_com"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="343dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/diamond_jewel_svgrepo_com" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="#0C7B93"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintEnd_toEndOf="@+id/profilePic"
+        app:srcCompat="@drawable/baseline_photo_camera_24"
+        app:strokeColor="#0C7B93"
+        app:strokeWidth="10dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
