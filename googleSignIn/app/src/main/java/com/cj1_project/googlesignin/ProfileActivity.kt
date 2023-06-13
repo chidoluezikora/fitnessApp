@@ -1,28 +1,32 @@
-package com.example.profile
+package com.cj1_project.googlesignin
 
+import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profilePic: ImageView
     private lateinit var addPhoto: FloatingActionButton
 
+    private lateinit var stepsButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_profile)
 
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.GRAY))
 
         profilePic = findViewById(R.id.profilePic)
         addPhoto = findViewById(R.id.addPhoto)
+
+        stepsButton = findViewById<Button>(R.id.stepsButton)
 
         addPhoto.setOnClickListener {
 
@@ -32,12 +36,11 @@ class MainActivity : AppCompatActivity() {
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start()
         }
-    }
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        profilePic.setImageURI(data?.data)
+        stepsButton.setOnClickListener {
+            val intent = Intent(this@ProfileActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
