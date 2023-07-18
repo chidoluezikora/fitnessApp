@@ -5,4 +5,7 @@
     <string name="location">Location</string>
     <string name="gps">GPS</string>
     <string name="click_the_start_button">Click the start button</string>
+    <string name="current_speed">Current Speed</string>
+    <string name="speed">Speed</string>
+    <string name="get_location">Get Location</string>
 </resources>
