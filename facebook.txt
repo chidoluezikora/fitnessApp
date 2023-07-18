@@ -1,0 +1,6 @@
+C:\Users\shant\Downloads\openssl-0.9.8e_X64\bin
+
+
+      
+keytool -exportcert -alias androiddebugkey -keystore "C:\Users\shant\.android\debug.keystore" | "C:\Users\shant\Downloads\openssl-0.9.8e_X64\bin\openssl" sha1 -binary | "C:\Users\shant\Downloads\openssl-0.9.8e_X64\bin\openssl" base64
+      

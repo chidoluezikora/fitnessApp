@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#459DE4</color>
     <color name="red">#FF0000</color>
+
+    <color name="BlueShade1">#004B59</color>
+    <color name="BS2">#1E3F66</color>
+    <color name="BS3" />
+    <color name="BS4">#1c2331</color>
+    <color name="BS5">#0c7b93</color>
 </resources>
