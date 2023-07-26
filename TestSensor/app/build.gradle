@@ -1,14 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
     id 'com.google.gms.google-services'
->>>>>>> Stashed changes
-=======
-    id 'com.google.gms.google-services'
->>>>>>> Stashed changes
 }
 
 android {
@@ -49,6 +42,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    implementation 'com.google.firebase:firebase-database:20.0.4'
+>>>>>>> Stashed changes
+=======
+    implementation 'com.google.firebase:firebase-database:20.0.4'
+>>>>>>> Stashed changes
 =======
     implementation 'com.google.firebase:firebase-database:20.0.4'
 >>>>>>> Stashed changes
