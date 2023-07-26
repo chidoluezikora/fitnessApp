@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "290521325357",
+    "project_id": "sensordata-2a01f",
+    "storage_bucket": "sensordata-2a01f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290521325357:android:2790a3e8eb28a81fff7da4",
+        "android_client_info": {
+          "package_name": "com.cj1_project.testsensor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290521325357-o7rgivnr8icbgmp68jpu5c280a148mb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpe5GyVfErWdtr0aanV5Hd10fAMl1wWQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290521325357-o7rgivnr8icbgmp68jpu5c280a148mb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

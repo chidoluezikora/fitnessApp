@@ -1,4 +1,18 @@
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+=======
+=======
+>>>>>>> Stashed changes
+buildscript {
+    dependencies {
+        classpath 'com.google.gms:google-services:4.3.10'
+    }
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
