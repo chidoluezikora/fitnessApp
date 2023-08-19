@@ -18,7 +18,7 @@ import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FireebaseDatabase
+import com.google.firebase.database.FirebaseDatabase
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -34,20 +34,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var mAccelerometer : Sensor ?= null
     private var resume = false
     private var totalStepsWorkout : Float = 0.0F;
-    private var accelerationValsEndWorkout : Array<Array<Float>>? = null;
-    private lateinit var firebase : DatabaseReference
+    private var accelerationValsEndWorkout : MutableList<Array<Float>> = mutableListOf();
+    private lateinit var workoutReference : DatabaseReference
     //pedometer
-    /*private var running = false
-    private var totalSteps = 0f
+    private var running = false
+    /*private var totalSteps = 0f
     private var previousTotalSteps = 0f
     private lateinit var stepsTaken : TextView*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        firebase = FirebaseDatabase.getInstance().getReference()
+        workoutReference = FirebaseDatabase.getInstance().getReference("Workout")
 
-        println(firebase);
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) // we exclude gravity while calculating speed
@@ -74,8 +73,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             if (event.sensor.type == Sensor.TYPE_LINEAR_ACCELERATION) {
                 val hi = "Linear Acceleration is \n" + "X : ${event.values[0]}\n" +
                         "Y : ${event.values[1]}\n" + "Z : ${event.values[2]}"
-                val newAccRecord = arrayOf(event.values[0], event.values[1], event.values[2])
-                this.accelerationValsEndWorkout.add(newAccRecord);
+                val newAccRecord = arrayOf(event.values[0], event.values[1], event.values[2]);
+                accelerationValsEndWorkout.add(newAccRecord);
                 findViewById<TextView>(R.id.values).text = hi
 
                 //val abs = sqrt((event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2)))
@@ -85,7 +84,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
 
         if (running) {
-            this.totalStepsWorkout = event!!.values[0]
+            totalStepsWorkout = event!!.values[0]
         }
 
         /* val te = "RUnning value = $running"
@@ -129,8 +128,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onPause() {
         super.onPause()
         mSensorManager.unregisterListener(this)
-        // total steps
-        // acceleration vals *try with this, because it works properly*
+        val workoutId = workoutReference.push().key!!
+        val userId = "testUserExample"
+        val workout = WorkoutModel(workoutId, totalStepsWorkout, accelerationValsEndWorkout, userId)
+        workoutReference.child(workoutId).setValue(workout)
+            .addOnCompleteListener {
+                Toast.makeText(this, "Workout recorded successfully", Toast.LENGTH_LONG).show()
+            }.addOnFailureListener { err ->
+                Toast.makeText(this, "Error recording workout: ${err.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun resumeReading() {
