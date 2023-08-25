@@ -43,12 +43,6 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
 
     private var kmphSpeed = 0f
 
-    //pedometer
-   /* private var sensorManager: SensorManager? = null
-    private var running = false
-    private var totalSteps = 0f
-    private var previousTotalSteps = 0f
-    private lateinit var stepsTaken : TextView*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,10 +64,10 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
                 latitudeTextView.text = location.latitude.toString()
                 longitudeTextView.text = location.longitude.toString()
                 println(location.latitude.toString())
-               if (location.hasSpeed()){
-                   kmphSpeed = (location.speed * 3.6).toFloat()
-                   speedTextView.text = kmphSpeed.toString()
-               }
+                if (location.hasSpeed()){
+                    kmphSpeed = (location.speed * 3.6).toFloat()
+                    speedTextView.text = kmphSpeed.toString()
+                }
                 else
                     speedTextView.text = "0.0"
             }
@@ -145,16 +139,6 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
             statusTextView.text = getString(R.string.startedKT)
         }
 
-        //pedometer
-/*
-        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-
-        if(stepSensor == null){
-            Toast.makeText(this.context,"No sensor on this device",Toast.LENGTH_SHORT).show()
-
-        } else {
-            sensorManager?.registerListener(this,stepSensor,SensorManager.SENSOR_DELAY_UI)
-        }*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -184,62 +168,10 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
             statusTextView.text = getString(R.string.stoppedKT)
         }
 
-        //pedometer
-        /*loadData()
-        resetSteps()
-        sensorManager = this.context?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        stepsTaken = view.findViewById(R.id.stepsTaken)
-        // not that accurate implementation, use accelerometer to check and increase accuracy*/
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    //pedometer
-   /* override fun onSensorChanged(event: SensorEvent?) {
-        if (running){
-            totalSteps = event!!.values[0]
-            val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
-            stepsTaken.text = ("$currentSteps")
-
-            val circularProgressBar = view?.findViewById<CircularProgressBar>(R.id.circularProgressBar)
-            circularProgressBar?.apply{
-                setProgressWithAnimation(currentSteps.toFloat())
-            }
-        }
-    }
-
-    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-        TODO("Not yet implemented")
-    }
-
-    fun resetSteps(){
-        stepsTaken.setOnClickListener {
-            Toast.makeText(this.context,"Long tap to rest Steps",Toast.LENGTH_SHORT).show()
-        }
-        stepsTaken.setOnLongClickListener {
-            previousTotalSteps = totalSteps
-            stepsTaken.text = 0.toString()
-            saveData()
-
-            true
-        }
-    }
-
-    private fun saveData() {
-        val sharedPreferences: SharedPreferences? =
-            this.context?.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        sharedPreferences?.edit()?.putFloat("key1", previousTotalSteps)?.apply()
-    }
-
-    private fun loadData(){
-        val sharedPreferences = this.context?.getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
-        val savedNumber = sharedPreferences?.getFloat("key1",0f)
-        //Log.d()
-        if (savedNumber != null) {
-            previousTotalSteps = savedNumber
-        }
-    }*/
 }
