@@ -29,14 +29,14 @@ import kotlin.math.sqrt
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var mSensorManager: SensorManager
-    /*private var mAccelerometer : Sensor ?= null
-    private var resume = false*/
+    private var mAccelerometer : Sensor ?= null
+    private var resume = false
 
     //pedometer
-     private var running = false
+     /*private var running = false
      private var totalSteps = 0f
      private var previousTotalSteps = 0f
-     private lateinit var stepsTaken : TextView
+     private lateinit var stepsTaken : TextView*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        //mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) // we exclude gravity while calculating speed
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) // we exclude gravity while calculating speed
 
         val button1: Button = findViewById(R.id.start)
         button1.setOnClickListener {
@@ -57,24 +57,24 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
 
         //pedometer
-        loadData()
-        resetSteps()
+        //loadData()
+        //resetSteps()
 
         // not that accurate implementation, use accelerometer to check and increase accuracy
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        /*if (event != null && resume) {
+        if (event != null && resume) {
             if (event.sensor.type == Sensor.TYPE_LINEAR_ACCELERATION) {
                 val hi = "Linear Acceleration is \n" + "X : ${event.values[0]}\n" +
                         "Y : ${event.values[1]}\n" + "Z : ${event.values[2]}"
-                findViewById<TextView>(R.id.values).text = hi
 
-                //val abs = sqrt((event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2)))
+                val abs = sqrt((event.values[0].pow(2) + event.values[1].pow(2) + event.values[2].pow(2)))
+                findViewById<TextView>(R.id.abs).text = abs.toString()
                 //val speed = abs /
             }
-        }*/
-        val te = "RUnning value = $running"
+        }
+        /*val te = "RUnning value = $running"
         println(te)
         if (running){
             totalSteps = event!!.values[0]
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             circularProgressBar.apply{
                 setProgressWithAnimation(currentSteps.toFloat())
             }
-        }
+        }*/
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
@@ -97,9 +97,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        //mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
 
-        running = true
+        /*running = true
         println("Running On Resume")
         //pedometer
         val stepSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
@@ -109,24 +109,24 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         } else {
             mSensorManager.registerListener(this,stepSensor,SensorManager.SENSOR_DELAY_NORMAL)
-        }
+        }*/
 
     }
     override fun onPause() {
         super.onPause()
-        //mSensorManager.unregisterListener(this)
+        mSensorManager.unregisterListener(this)
 
     }
 
     private fun resumeReading() {
-        //this.resume = true
+        this.resume = true //accelerometer
     }
 
     private fun pauseReading() {
-        //this.resume = false
+        this.resume = false //accelerometer
     }
 
-    private fun resetSteps(){
+   /* private fun resetSteps(){
         findViewById<TextView>(R.id.stepsTaken ).setOnClickListener {
             Toast.makeText(this,"Long tap to rest Steps",Toast.LENGTH_SHORT).show()
         }
@@ -151,5 +151,5 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val savedNumber = sharedPreferences.getFloat("key1",0f)
         Log.d("MainActivity", "$savedNumber")
         previousTotalSteps = savedNumber
-    }
+    }*/
 }
