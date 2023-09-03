@@ -43,6 +43,12 @@ class SignInActivity : AppCompatActivity() {
         signInButton.setOnClickListener {
             signIn()
         }
+
+        val signInWithEmailButton = findViewById<Button>(R.id.signInEmail)
+        signInWithEmailButton.setOnClickListener {
+            val intent = Intent(this, SignInEmailActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun signIn() {

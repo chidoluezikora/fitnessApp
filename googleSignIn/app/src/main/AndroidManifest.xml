@@ -30,6 +30,16 @@
             android:name=".ProfileActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".SignInEmailActivity"
+            android:theme="@style/Theme.MaterialComponents"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".SignUpEmailActivity"
+            android:theme="@style/Theme.MaterialComponents"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2E5984"
+    android:background="@android:color/holo_blue_dark"
     tools:context=".SignInActivity">
 
     <View
@@ -30,14 +30,14 @@
             android:layout_height="495dp"
             android:background="@android:color/holo_blue_bright"
             android:orientation="vertical"
-            android:paddingTop="100dp">
+            android:paddingTop="80dp">
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/fitness_app_logo" />
+                android:src="@drawable/app_logo" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -45,7 +45,6 @@
                 android:layout_marginVertical="30sp"
                 android:gravity="center_horizontal"
                 android:text="Login"
-                android:textColor="#2E5984"
                 android:textSize="15sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -84,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20sp"
                 android:layout_marginTop="28sp"
-                android:background="#2E5984"
+                android:background="@android:color/holo_blue_dark"
                 android:text="Login"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
@@ -95,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,11 +103,12 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/notYetRegistered"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Register here"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </LinearLayout>
 
         </LinearLayout>
