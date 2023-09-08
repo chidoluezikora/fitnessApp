@@ -1,9 +1,13 @@
 package com.example.mapsview
 
 // Add these imports at the beginning of your Kotlin file
+import android.annotation.SuppressLint
+import android.app.ProgressDialog.show
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,15 +19,32 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        val fab = findViewById<Button>(R.id.fab)
+        fab.setOnClickListener { view ->
+            Snackbar.make(view,"Here's SnackBar",Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }
+
+        val fab1 = findViewById<Button>(R.id.fab1)
+        fab1.setOnClickListener { view ->
+            Snackbar.make(view,"Here's SnackBar1",Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
