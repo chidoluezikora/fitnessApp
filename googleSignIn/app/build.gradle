@@ -42,7 +42,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.1' //1.7.0
+    implementation 'androidx.core:core-ktx:1.7.0' //1.7.0
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -59,4 +59,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
     implementation 'com.github.dhaval2404:imagepicker:2.1'
+    implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
 }

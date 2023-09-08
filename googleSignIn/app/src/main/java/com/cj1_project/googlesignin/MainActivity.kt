@@ -5,13 +5,6 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import android.location.Location
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -23,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 
 //https://www.youtube.com/watch?v=H_maapn4Q3Q
 //https://medium.com/swlh/google-login-and-logout-in-android-with-firebase-kotlin-implementation-73cf6a5a989e
@@ -31,8 +25,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var mAuth: FirebaseAuth
+    /*private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mAuth: FirebaseAuth*/
+
+    //location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
 
@@ -40,42 +36,62 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mAuth = FirebaseAuth.getInstance()
-
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        //mAuth = FirebaseAuth.getInstance()
+
+        //google sign in
+        /*val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
-            .build()
+            .build()*/
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        //mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
 
 
-        val textView = findViewById<TextView>(R.id.name)
+        /*val textView = findViewById<TextView>(R.id.name)
 
         val auth = Firebase.auth
         val user = auth.currentUser
 
         if (user != null) {
             val userName = user.displayName
-            textView.text = "Welcome, " + userName
+            textView.text = "Welcome, $userName"
         } else {
             // Handle the case where the user is not signed in
         }
 
-// Inside onCreate() method
+        // Inside onCreate() method
         val sign_out_button = findViewById<Button>(R.id.logout_button)
         sign_out_button.setOnClickListener {
-            signOutAndStartSignInActivity()
+            //signOutAndStartSignInActivity()
+        }*/
+
+        val fab = findViewById<Button>(R.id.fab)
+        fab.setOnClickListener { view ->
+            Snackbar.make(view,"Here's SnackBar",Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
         }
+
+        val fab1 = findViewById<Button>(R.id.fab1)
+        fab1.setOnClickListener {
+            /*Snackbar.make(view,"Here's SnackBar1",Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()*/
+            val intent = Intent(this,ProfileActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
     }
 
-    private fun signOutAndStartSignInActivity() {
+    /*private fun signOutAndStartSignInActivity() {
         mAuth.signOut()
 
         mGoogleSignInClient.signOut().addOnCompleteListener(this) {
@@ -84,7 +100,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
             finish()
         }
-    }
+    }*/
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap

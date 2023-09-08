@@ -34,7 +34,8 @@ class SignInActivity : AppCompatActivity() {
 
         if (currentUser != null) {
             // The user is already signed in, navigate to MainActivity
-            val intent = Intent(this, MainActivity::class.java)
+            //Log out option doesnt work anywhere else except the activity written here
+            val intent = Intent(this, MainActivity::class.java/*ProfileActivity::class.java*/)
             startActivity(intent)
             finish() // finish the current activity to prevent the user from coming back to the SignInActivity using the back button
         }
