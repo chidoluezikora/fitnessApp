@@ -18,8 +18,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.database.DatabaseReference
+//import com.google.firebase.database.FirebaseDatabase
 import com.cj1_project.myapplication.databinding.FragmentFirstBinding
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -39,7 +39,7 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
     private lateinit var statusTextView: TextView
     private lateinit var locationManager: GeoLocation
     private var locationAndSpeedArr : MutableList<Array<String>> = mutableListOf();
-    private lateinit var workoutReference : DatabaseReference
+    //private lateinit var workoutReference : DatabaseReference
 
     private val LOCATION_PERMISSION_CODE = 1000
 
@@ -55,7 +55,7 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
 
         // Create GeoLocationManager
         locationManager = GeoLocation(activity as Context)
-        workoutReference = FirebaseDatabase.getInstance().getReference("Workout")
+       // workoutReference = FirebaseDatabase.getInstance().getReference("Workout")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_first, container, false)
 
@@ -134,7 +134,7 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
         super.onPause()
         locationManager.stopLocationTracking()
         statusTextView.text = getString(R.string.stoppedKT)
-        val workoutId = workoutReference.push().key!!
+        /*val workoutId = workoutReference.push().key!!
         val userId = "testUserExample"
         val workout = WorkoutModel(workoutId, locationAndSpeedArr, userId)
         workoutReference.child(workoutId).setValue(workout)
@@ -142,7 +142,7 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
                 Toast.makeText(activity as Context, "Workout recorded successfully", Toast.LENGTH_LONG).show()
             }.addOnFailureListener { err ->
                 Toast.makeText(activity as Context, "Error recording workout: ${err.message}", Toast.LENGTH_LONG).show()
-            }
+            }*/
     }
 
     override fun onResume() {
@@ -154,7 +154,6 @@ class FirstFragment : Fragment() /*, SensorEventListener*/ {
             locationManager.startLocationTracking(locationCallback)
             statusTextView.text = getString(R.string.startedKT)
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
