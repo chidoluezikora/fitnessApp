@@ -28,7 +28,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
     //grid variables
     private lateinit var mGridAdapter : GridRVAdapter
     private lateinit var workoutGRV: GridView
-    private lateinit var workoutList: MutableList<GridViewModal>
+    private lateinit var workoutList: MutableList<GridViewModel>
 
     //grid update value variables (Need to add these to the database)
     private var speedGird : String = "0.0"
@@ -68,10 +68,10 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
         workoutGRV = findViewById(R.id.idGRV)
         workoutList = ArrayList()
 
-        workoutList.add(GridViewModal("Speed", speedGird,R.drawable.speed))
-        workoutList.add(GridViewModal("Distance",distanceGrid, R.drawable.distance))
-        workoutList.add(GridViewModal("Time",timeGrid, R.drawable.clock))
-        workoutList.add(GridViewModal("Steps",calorieGrid, R.drawable.steps))
+        workoutList.add(GridViewModel("Speed", speedGird,R.drawable.speed))
+        workoutList.add(GridViewModel("Distance",distanceGrid, R.drawable.distance))
+        workoutList.add(GridViewModel("Time",timeGrid, R.drawable.clock))
+        workoutList.add(GridViewModel("Steps",calorieGrid, R.drawable.steps))
 
         mGridAdapter = GridRVAdapter(workoutList = workoutList, this@WorkoutActivity)
         workoutGRV.adapter = mGridAdapter
@@ -145,9 +145,9 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
                 val number2digits:Double = String.format("%.2f", number3digits).toDouble()
                 distanceGrid = number2digits.toString()
 
-                workoutList[0] = GridViewModal("Speed", speedGird,R.drawable.speed)
-                workoutList[1] = GridViewModal("Distance",distanceGrid, R.drawable.distance)
-                //workoutList[3] = GridViewModal("Calories",calorieGrid, R.drawable.calories)
+                workoutList[0] = GridViewModel("Speed", speedGird,R.drawable.speed)
+                workoutList[1] = GridViewModel("Distance",distanceGrid, R.drawable.distance)
+                //workoutList[3] = GridViewModel("Calories",calorieGrid, R.drawable.calories)
                 mGridAdapter.notifyDataSetChanged()
             }
         }
@@ -233,7 +233,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
             val step : Int = totalSteps.toInt()
 
             calorieGrid = step.toString()
-            workoutList[3] = GridViewModal("Steps",calorieGrid, R.drawable.steps)
+            workoutList[3] = GridViewModel("Steps",calorieGrid, R.drawable.steps)
             mGridAdapter.notifyDataSetChanged()
 
         } else {
@@ -246,7 +246,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
                 println(currentSteps)
                 // It will show the current steps to the user
                 calorieGrid = currentSteps.toString()
-                workoutList[3] = GridViewModal("Calories",calorieGrid, R.drawable.calories)
+                workoutList[3] = GridViewModel("Calories",calorieGrid, R.drawable.calories)
                 mGridAdapter.notifyDataSetChanged()
             }
         }
@@ -261,7 +261,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
             // When the user will click long tap on the screen,
             // the steps will be reset to 0
             calorieGrid = 0.toString()
-            workoutList[3] = GridViewModal("Calories",calorieGrid, R.drawable.calories)
+            workoutList[3] = GridViewModel("Calories",calorieGrid, R.drawable.calories)
             mGridAdapter.notifyDataSetChanged()
             // This will save the data
             saveData()
@@ -301,7 +301,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
     private fun initStopWatch() {
        // binding?.textViewStopWatch?.text = getString(R.string.init_stop_watch_value)
         timeGrid = "00:00:00"
-        workoutList[2] = GridViewModal("Time",timeGrid, R.drawable.clock)
+        workoutList[2] = GridViewModel("Time",timeGrid, R.drawable.clock)
         mGridAdapter.notifyDataSetChanged()
     }
 
@@ -332,7 +332,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
         val formattedTime = getFormattedStopWatch((timeInSeconds * 1000))
         Log.e("formattedTime", formattedTime)
         timeGrid = formattedTime
-        workoutList[2] = GridViewModal("Time",timeGrid, R.drawable.clock)
+        workoutList[2] = GridViewModel("Time",timeGrid, R.drawable.clock)
         mGridAdapter.notifyDataSetChanged()
     }
 
