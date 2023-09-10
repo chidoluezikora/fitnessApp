@@ -1,8 +1,14 @@
 package com.cj1_project.googlesignin
 
+//https://medium.com/@chris_42047/geo-location-tracking-in-android-with-kotlin-f4ec57743956
+
 import android.content.Context
 import android.os.Looper
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 
 class GeoLocation(context: Context) {
     private val context: Context = context
@@ -22,10 +28,8 @@ class GeoLocation(context: Context) {
     fun startLocationTracking(locationCallback: LocationCallback) {
         if (!startedLocationTracking) {
             //noinspection MissingPermission
-            fusedLocationClient.requestLocationUpdates(
-                LocationRequest.Builder(
-                    Priority.PRIORITY_HIGH_ACCURACY,
-                    UPDATE_INTERVAL_MILLISECONDS).setMinUpdateIntervalMillis(FASTEST_UPDATE_INTERVAL_MILLISECONDS).build(),
+            fusedLocationClient.requestLocationUpdates(LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,
+                UPDATE_INTERVAL_MILLISECONDS).setMinUpdateIntervalMillis(FASTEST_UPDATE_INTERVAL_MILLISECONDS).build(),
                 locationCallback,
                 Looper.getMainLooper())
 

@@ -91,11 +91,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             stepSensor != null -> {
                 sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
             }
-            stepDetector != null -> {
-                sensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_UI)
-            }
             stepAccelerometer != null -> {
                 sensorManager.registerListener(this, stepAccelerometer, SensorManager.SENSOR_DELAY_UI)
+            }
+            stepDetector != null -> {
+                sensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_UI)
             }
             else -> {
                 Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_LONG).show()
