@@ -17,6 +17,9 @@ import com.google.android.gms.location.LocationResult
 import kotlin.math.*
 import com.cj1_project.googlesignin.Constants.TIMER_INTERVAL
 import com.cj1_project.googlesignin.Utility.getFormattedStopWatch
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
 import com.cj1_project.googlesignin.databinding.ActivityMainBinding
 
 /*
@@ -24,17 +27,28 @@ import com.cj1_project.googlesignin.databinding.ActivityMainBinding
 * https://medium.com/swlh/how-to-create-a-stopwatch-in-android-117912264491 - StopWatch
 * */
 class WorkoutActivity : AppCompatActivity(), SensorEventListener {
+    // firebase auth for user id
+    val auth = FirebaseAuth.getInstance()
 
     //grid variables
     private lateinit var mGridAdapter : GridRVAdapter
     private lateinit var workoutGRV: GridView
     private lateinit var workoutList: MutableList<GridViewModel>
 
+    // firebase realtime db reference
+    private lateinit var workoutReference : DatabaseReference
+
     //grid update value variables (Need to add these to the database)
-    private var speedGird : String = "0.0"
+    private var speedGrid : String = "0.0"
     private var distanceGrid : String = "0.0"
     private var timeGrid : String = "0"
     private var calorieGrid : String = "0"
+
+    // lists for the firebase db
+    private var speedDBList : MutableList<String> = mutableListOf();
+    private var distanceDBList : MutableList<String> = mutableListOf();
+    private var timeDBList : MutableList<String> = mutableListOf();
+    private var calorieDBList : MutableList<String> = mutableListOf();
 
     //variables for calculating distance
     private lateinit var workoutLatitudeList : MutableList<Double>
@@ -63,12 +77,15 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout)
 
+        // initializing workout reference
+        workoutReference = FirebaseDatabase.getInstance().getReference("Workout")
+
         // --------------------------------------------------------------
         // initializing variables of grid view with their ids.
         workoutGRV = findViewById(R.id.idGRV)
         workoutList = ArrayList()
 
-        workoutList.add(GridViewModel("Speed", speedGird,R.drawable.speed))
+        workoutList.add(GridViewModel("Speed", speedGrid,R.drawable.speed))
         workoutList.add(GridViewModel("Distance",distanceGrid, R.drawable.distance))
         workoutList.add(GridViewModel("Time",timeGrid, R.drawable.clock))
         workoutList.add(GridViewModel("Steps",calorieGrid, R.drawable.steps))
@@ -132,21 +149,23 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
 
                 if (location.hasSpeed()){
                     kmphSpeed = (location.speed * 3.6).toFloat()
-                    speedGird = kmphSpeed.toString()
+                    speedGrid = kmphSpeed.toString()
                     /*println("Latitude" + location.latitude.toString())
                       println("Longitude" + location.longitude.toString())
                       println("Speed" + location.speed.toString())
                       println("Speed KMPH $kmphSpeed")*/
                 }
                 else
-                    speedGird = "0.0"
+                    speedGrid = "0.0"
 
                 val number3digits:Double = String.format("%.3f", distanceGrid.toDouble()).toDouble()
                 val number2digits:Double = String.format("%.2f", number3digits).toDouble()
                 distanceGrid = number2digits.toString()
 
-                workoutList[0] = GridViewModel("Speed", speedGird,R.drawable.speed)
+                workoutList[0] = GridViewModel("Speed", speedGrid,R.drawable.speed)
                 workoutList[1] = GridViewModel("Distance",distanceGrid, R.drawable.distance)
+                speedDBList.add(speedGrid);
+                distanceDBList.add(distanceGrid);
                 //workoutList[3] = GridViewModel("Calories",calorieGrid, R.drawable.calories)
                 mGridAdapter.notifyDataSetChanged()
             }
@@ -234,6 +253,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
 
             calorieGrid = step.toString()
             workoutList[3] = GridViewModel("Steps",calorieGrid, R.drawable.steps)
+            calorieDBList.add(calorieGrid);
             mGridAdapter.notifyDataSetChanged()
 
         } else {
@@ -247,6 +267,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
                 // It will show the current steps to the user
                 calorieGrid = currentSteps.toString()
                 workoutList[3] = GridViewModel("Calories",calorieGrid, R.drawable.calories)
+                calorieDBList.add(calorieGrid);
                 mGridAdapter.notifyDataSetChanged()
             }
         }
@@ -277,6 +298,25 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
         // In this function we will save data
         val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
 
+        // saving the workout data
+        val workoutId = workoutReference.push().key!!
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(this, "Could not retrieve user's ID", Toast.LENGTH_LONG).show()
+        } else {
+            val userId = currentUser.uid
+            val workout = WorkoutModel(workoutId, speedDBList, distanceDBList, timeDBList, calorieDBList, userId)
+            workoutReference.child(workoutId).setValue(workout)
+                .addOnCompleteListener {
+                    Toast.makeText(this, "Workout recorded successfully", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener { err ->
+                    Toast.makeText(
+                        this,
+                        "Error recording workout: ${err.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+        }
         val editor = sharedPreferences.edit()
         editor.putFloat("key1", previousTotalSteps)
         editor.apply()
@@ -302,6 +342,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
        // binding?.textViewStopWatch?.text = getString(R.string.init_stop_watch_value)
         timeGrid = "00:00:00"
         workoutList[2] = GridViewModel("Time",timeGrid, R.drawable.clock)
+        timeDBList.add(timeGrid)
         mGridAdapter.notifyDataSetChanged()
     }
 
@@ -333,6 +374,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
         Log.e("formattedTime", formattedTime)
         timeGrid = formattedTime
         workoutList[2] = GridViewModel("Time",timeGrid, R.drawable.clock)
+        timeDBList.add(timeGrid)
         mGridAdapter.notifyDataSetChanged()
     }
 
