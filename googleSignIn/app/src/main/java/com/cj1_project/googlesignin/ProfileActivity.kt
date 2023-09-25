@@ -58,7 +58,6 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
 
         //add photo
         //supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.GRAY))
-
         profilePic = findViewById(R.id.profilePic)
         addPhoto = findViewById(R.id.addPhoto)
         addPhoto.setOnClickListener {
@@ -71,7 +70,7 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
 
         //pedometer
         loadData()
-        resetSteps()
+        //resetSteps()
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         //User Name
@@ -191,25 +190,23 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun resetSteps() {
-        val stepsTaken = findViewById<TextView>(R.id.steps)
-        stepsTaken.setOnClickListener {
-            // This will give a toast message if the user want to reset the steps
-            Toast.makeText(this, "Long tap to reset steps", Toast.LENGTH_SHORT).show()
+        if (totalSteps >3000){
+            val stepsTaken = findViewById<TextView>(R.id.steps)
+            stepsTaken.setOnClickListener {
+                // This will give a toast message if the user want to reset the steps
+                Toast.makeText(this, "Long tap to reset steps", Toast.LENGTH_SHORT).show()
+            }
+            stepsTaken.setOnLongClickListener {
+                previousTotalSteps = totalSteps
+                // When the user will click long tap on the screen,
+                // the steps will be reset to 0
+                stepsTaken.text = 0.toString()
+                // This will save the data
+                saveData()
+                true
+            }
         }
 
-        stepsTaken.setOnLongClickListener {
-
-            previousTotalSteps = totalSteps
-
-            // When the user will click long tap on the screen,
-            // the steps will be reset to 0
-            stepsTaken.text = 0.toString()
-
-            // This will save the data
-            saveData()
-
-            true
-        }
     }
 
     private fun saveData() {
@@ -240,4 +237,10 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
         // We do not have to write anything in this function for this app
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        profilePic.setImageURI(data?.data)
+    }
 }
