@@ -121,6 +121,26 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
             locationTrackingRequested = false
             stopTimer()
             findViewById<TextView>(R.id.textWorkout).text = "Workout Stopped"
+
+            // saving the workout data
+            val workoutId = workoutReference.push().key!!
+            val currentUser = auth.currentUser
+            if (currentUser == null) {
+                Toast.makeText(this, "Could not retrieve user's ID", Toast.LENGTH_LONG).show()
+            } else {
+                val userId = currentUser.uid
+                val workout = WorkoutModel(workoutId, speedDBList, distanceDBList, timeDBList, calorieDBList, userId)
+                workoutReference.child(workoutId).setValue(workout)
+                    .addOnCompleteListener {
+                        Toast.makeText(this, "Workout recorded successfully", Toast.LENGTH_LONG).show()
+                    }.addOnFailureListener { err ->
+                        Toast.makeText(
+                            this,
+                            "Error recording workout: ${err.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+            }
         }
     }
 
@@ -158,7 +178,10 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
                 else
                     speedGrid = "0.0"
 
-                val number3digits:Double = String.format("%.3f", distanceGrid.toDouble()).toDouble()
+                print("Distance Grid")
+                print(distanceGrid)
+                val distanceGridDotDecimal = distanceGrid.replace(",", ".")
+                val number3digits:Double = String.format("%.3f", distanceGridDotDecimal.toDouble()).toDouble()
                 val number2digits:Double = String.format("%.2f", number3digits).toDouble()
                 distanceGrid = number2digits.toString()
 
@@ -297,26 +320,6 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
         // and retrieve data in the form of key,value pair.
         // In this function we will save data
         val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-
-        // saving the workout data
-        val workoutId = workoutReference.push().key!!
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            Toast.makeText(this, "Could not retrieve user's ID", Toast.LENGTH_LONG).show()
-        } else {
-            val userId = currentUser.uid
-            val workout = WorkoutModel(workoutId, speedDBList, distanceDBList, timeDBList, calorieDBList, userId)
-            workoutReference.child(workoutId).setValue(workout)
-                .addOnCompleteListener {
-                    Toast.makeText(this, "Workout recorded successfully", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener { err ->
-                    Toast.makeText(
-                        this,
-                        "Error recording workout: ${err.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-        }
         val editor = sharedPreferences.edit()
         editor.putFloat("key1", previousTotalSteps)
         editor.apply()
