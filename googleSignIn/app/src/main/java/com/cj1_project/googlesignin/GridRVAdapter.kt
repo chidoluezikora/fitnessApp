@@ -10,7 +10,7 @@ import android.widget.TextView
 
 internal class GridRVAdapter(
 
-    private val workoutList: List<GridViewModal>,
+    private val workoutList: List<GridViewModel>,
     private val context: Context
 ) :
     BaseAdapter() {
