@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
@@ -37,6 +38,9 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
     private var running : Boolean = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
+
+    // user reference
+    private lateinit var reference : DatabaseReference
 
     //logout
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -74,18 +78,23 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         //User Name
-        val textView = findViewById<TextView>(R.id.userName)
+        var textView = findViewById<TextView>(R.id.userName)
+        var userName = ""
+        textView.text = userName
+        val reference = FirebaseDatabase.getInstance().reference
+        val userID = FirebaseAuth.getInstance().currentUser!!.uid
 
-        val auth = Firebase.auth
-        val user = auth.currentUser
+        reference.child("User").child(userID).get().addOnSuccessListener { dataSnapshot ->
+            val firstName = dataSnapshot.child("firstName").value.toString()
+            val lastName = dataSnapshot.child("lastName").value.toString()
+            userName = "$firstName $lastName"
+            Log.d("tag2", userName)
 
-        if (user != null) {
-            val userName = user.displayName
-            textView.text = "$userName"
-        } else {
-            // Handle the case where the user is not signed in
+            // Set the textView.text inside the success listener
+            textView.text = userName
+        }.addOnFailureListener { exception ->
+            Log.d("tag3", "Error: ${exception.message}")
         }
-
         //sign in and out
         //google sign in
 
