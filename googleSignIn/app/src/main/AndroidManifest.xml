@@ -62,6 +62,10 @@
             android:name=".UserDetailsActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents" />
+        <activity
+            android:name=".WorkoutHistoryActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents" />
     </application>
 
 </manifest>

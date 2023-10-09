@@ -88,8 +88,6 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
             val firstName = dataSnapshot.child("firstName").value.toString()
             val lastName = dataSnapshot.child("lastName").value.toString()
             userName = "$firstName $lastName"
-            Log.d("tag2", userName)
-
             // Set the textView.text inside the success listener
             textView.text = userName
         }.addOnFailureListener { exception ->

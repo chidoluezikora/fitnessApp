@@ -1,16 +1,19 @@
 package com.cj1_project.googlesignin
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -20,7 +23,8 @@ import com.cj1_project.googlesignin.Utility.getFormattedStopWatch
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.FirebaseAuth
-import com.cj1_project.googlesignin.databinding.ActivityMainBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /*
 * https://www.atlantis-press.com/article/125925132.pdf - Calorie Formula
@@ -73,6 +77,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
 
     private var timeInSeconds = 0L
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout)
@@ -129,10 +134,13 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
                 Toast.makeText(this, "Could not retrieve user's ID", Toast.LENGTH_LONG).show()
             } else {
                 val userId = currentUser.uid
-                val workout = WorkoutModel(workoutId, speedDBList, distanceDBList, timeDBList, calorieDBList, userId)
+                val timeRecorded = getCurrentTime()
+                val workout = WorkoutModel(workoutId, speedDBList, distanceDBList, timeDBList, calorieDBList, timeRecorded, userId)
                 workoutReference.child(workoutId).setValue(workout)
                     .addOnCompleteListener {
                         Toast.makeText(this, "Workout recorded successfully", Toast.LENGTH_LONG).show()
+                        val intent  = Intent(this, WorkoutHistoryActivity::class.java)
+                        startActivity(intent)
                     }.addOnFailureListener { err ->
                         Toast.makeText(
                             this,
@@ -220,6 +228,14 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
 
     private fun degreesToRadians(degrees : Double): Double {
         return degrees * Math.PI / 180
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurrentTime(): String {
+        val currentTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd--MM-yyyy HH:mm:ss")
+
+        return currentTime.format(formatter)
     }
 
     override fun onResume() {

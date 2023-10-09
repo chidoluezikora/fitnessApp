@@ -6,5 +6,6 @@ data class WorkoutModel(
     var distanceDBList: MutableList<String>,
     var timeDBList: MutableList<String>,
     var calorieDBList: MutableList<String>,
+    var timeRecorded: String,
     var userId: String
 )
