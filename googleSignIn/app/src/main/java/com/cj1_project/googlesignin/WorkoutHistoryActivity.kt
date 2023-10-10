@@ -3,6 +3,7 @@ package com.cj1_project.googlesignin
 import android.os.Bundle
 import android.util.Log
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -36,9 +37,8 @@ class WorkoutHistoryActivity : AppCompatActivity() {
             val adapter = WorkoutAdapter(this, R.layout.workout_item, list)
             listView.adapter = adapter
         }.addOnFailureListener { exception ->
+            Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
             Log.d("tag3", "Error: ${exception.message}")
         }
-
-
     }
 }
