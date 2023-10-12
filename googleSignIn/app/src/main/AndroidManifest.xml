@@ -66,6 +66,10 @@
             android:name=".WorkoutHistoryActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents" />
+        <activity
+            android:name=".WorkoutScrollingActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents" />
     </application>
 
 </manifest>

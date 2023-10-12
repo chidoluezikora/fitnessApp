@@ -139,7 +139,7 @@ class WorkoutActivity : AppCompatActivity(), SensorEventListener {
                 workoutReference.child(workoutId).setValue(workout)
                     .addOnCompleteListener {
                         Toast.makeText(this, "Workout recorded successfully", Toast.LENGTH_LONG).show()
-                        val intent  = Intent(this, WorkoutHistoryActivity::class.java)
+                        val intent  = Intent(this, WorkoutScrollingActivity::class.java)
                         startActivity(intent)
                     }.addOnFailureListener { err ->
                         Toast.makeText(

@@ -24,7 +24,10 @@ class WorkoutHistoryActivity : AppCompatActivity() {
         // get workouts associated with user from database
         reference = FirebaseDatabase.getInstance().reference
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        val query = reference.child("Workout").orderByChild("userId").equalTo(userId)
+        val query = reference.child("Workout")
+                            .orderByChild("userId")
+                            .equalTo(userId)
+                            .limitToLast(1)
 
         query.get().addOnSuccessListener { dataSnapshot ->
             list.clear()
@@ -34,6 +37,7 @@ class WorkoutHistoryActivity : AppCompatActivity() {
                     list.add(it)
                 }
             }
+            list.reverse()
             val adapter = WorkoutAdapter(this, R.layout.workout_item, list)
             listView.adapter = adapter
         }.addOnFailureListener { exception ->
