@@ -21,7 +21,7 @@ class SignUpEmailActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.alreadyRegistered.setOnClickListener{
-            val intent  = Intent(this, SignInEmailActivity::class.java)
+            val intent = Intent(this, SignInEmailActivity::class.java)
             startActivity(intent)
         }
 
@@ -34,7 +34,7 @@ class SignUpEmailActivity : AppCompatActivity() {
                 if (password  ==  confirmPassword) {
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         if(it.isSuccessful) {
-                            val intent  = Intent(this, SignInEmailActivity::class.java)
+                            val intent  = Intent(this, UserDetailsActivity::class.java)
                             startActivity(intent)
                         } else {
                             Toast.makeText(this,  it.exception.toString(), Toast.LENGTH_SHORT).show()
