@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 .show()*/
             val intent = Intent(this,WorkoutActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         val fab1 = findViewById<Button>(R.id.fab1)
@@ -63,9 +62,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 .show()*/
             val intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
-            finish()
-        }
 
+        }
 
     }
 

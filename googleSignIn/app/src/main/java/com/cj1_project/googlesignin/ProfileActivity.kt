@@ -52,13 +52,13 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
         setContentView(R.layout.activity_profile)
 
         //authentication
-        mAuth = FirebaseAuth.getInstance()
+        /*mAuth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
-            .build()
+            .build()*/
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        //mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         //add photo
         //supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.GRAY))
@@ -96,19 +96,20 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
         //sign in and out
         //google sign in
 
-        val sign_out_button = findViewById<Button>(R.id.logout)
-        sign_out_button.setOnClickListener {
-            signOutAndStartSignInActivity()
+        val viewDetailButton = findViewById<Button>(R.id.viewDetail)
+        viewDetailButton.setOnClickListener {
+            //signOutAndStartSignInActivity()
+            val intent = Intent(this,ViewDetailsActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.maps).setOnClickListener {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
-    private fun signOutAndStartSignInActivity() {
+    /*private fun signOutAndStartSignInActivity() {
         mAuth.signOut()
 
         mGoogleSignInClient.signOut().addOnCompleteListener(this) {
@@ -117,7 +118,7 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
             startActivity(intent)
             finish()
         }
-    }
+    }*/
     override fun onResume() {
         super.onResume()
 
