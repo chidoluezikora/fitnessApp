@@ -30,17 +30,15 @@ class WorkoutHistoryActivity : AppCompatActivity() {
 
         query.get().addOnSuccessListener { dataSnapshot ->
             list.clear()
-            val snapshot = dataSnapshot.children.filterNotNull()
-            for (sp in dataSnapshot.children) {
-                val workout = sp.getValue(WorkoutModel::class.java)
+            for (snapshot in dataSnapshot.children) {
+                val workout = snapshot.getValue(WorkoutModel::class.java)
                 workout?.let {
                     list.add(it)
                 }
             }
             list.reverse()
-            val adapter = WorkoutAdapter(this@WorkoutHistoryActivity, R.layout.workout_item, list)
+            val adapter = WorkoutAdapter(this, R.layout.workout_item, list)
             listView.adapter = adapter
-
         }.addOnFailureListener { exception ->
             Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
             Log.d("tag3", "Error: ${exception.message}")
