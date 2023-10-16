@@ -9,6 +9,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -24,13 +25,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 class ProfileActivity : AppCompatActivity(), SensorEventListener {
 
-    //user photo
+    // user photo
     private lateinit var profilePic: ImageView
     private lateinit var addPhoto: FloatingActionButton
+
+    // for storing images in the db
+    private lateinit var storageReference: StorageReference
+    private lateinit var storageReferenceRetrieve: StorageReference
 
     //pedometer
     private var magPreviousStep = 0.0
@@ -38,13 +45,6 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
     private var running : Boolean = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
-
-    // user reference
-    private lateinit var reference : DatabaseReference
-
-    //logout
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var mAuth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +63,7 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
         //add photo
         //supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.GRAY))
         profilePic = findViewById(R.id.profilePic)
+        retrieveProfilePhoto(profilePic)
         addPhoto = findViewById(R.id.addPhoto)
         addPhoto.setOnClickListener {
             ImagePicker.with(this)
@@ -245,10 +246,45 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
         // We do not have to write anything in this function for this app
     }
 
+    private fun retrieveProfilePhoto(profilePic: ImageView) {
+        try {
+            val userId = FirebaseAuth.getInstance().currentUser!!.uid
+            storageReferenceRetrieve = FirebaseStorage.getInstance().getReference("users/$userId")
+            storageReferenceRetrieve.downloadUrl.addOnSuccessListener { uri ->
+                profilePic.setImageURI(uri)
+            }.addOnFailureListener {
+                Toast.makeText(
+                    this@ProfileActivity,
+                    "Hey there! Upload a profile photo",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } catch(e: Exception) {
+            Toast.makeText(
+                this@ProfileActivity,
+                "Error: ${e.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun updateProfilePhoto(imagePickerPic: Uri?) {
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        storageReference = FirebaseStorage.getInstance().getReference("users/$userId.jpg")
+        if (imagePickerPic != null) {
+            storageReference.putFile(imagePickerPic).addOnSuccessListener {
+                Toast.makeText(this@ProfileActivity, "Profile picture updated successfully", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener { exception ->
+                Toast.makeText(this@ProfileActivity, "Failed to update profile photo : $exception", Toast.LENGTH_LONG).show()
+            }
+        }
+        profilePic.setImageURI(imagePickerPic)
+    }
+
     @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        profilePic.setImageURI(data?.data)
+        updateProfilePhoto(data?.data)
     }
 }
