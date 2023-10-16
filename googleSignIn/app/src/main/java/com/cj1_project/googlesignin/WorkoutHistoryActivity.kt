@@ -25,9 +25,8 @@ class WorkoutHistoryActivity : AppCompatActivity() {
         reference = FirebaseDatabase.getInstance().reference
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val query = reference.child("Workout")
-                            .orderByChild("userId")
-                            .equalTo(userId)
-                            .limitToLast(1)
+            .orderByChild("userId")
+            .equalTo(userId)
 
         query.get().addOnSuccessListener { dataSnapshot ->
             list.clear()
