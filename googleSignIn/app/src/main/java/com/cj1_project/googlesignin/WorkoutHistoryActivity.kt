@@ -27,7 +27,6 @@ class WorkoutHistoryActivity : AppCompatActivity() {
         val query = reference.child("Workout")
             .orderByChild("userId")
             .equalTo(userId)
-            .limitToLast(1)
 
         query.get().addOnSuccessListener { dataSnapshot ->
             list.clear()
