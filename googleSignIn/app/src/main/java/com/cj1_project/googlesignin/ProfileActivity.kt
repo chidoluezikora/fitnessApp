@@ -28,6 +28,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import com.squareup.picasso.Picasso
 
 class ProfileActivity : AppCompatActivity(), SensorEventListener {
 
@@ -249,9 +250,9 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
     private fun retrieveProfilePhoto(profilePic: ImageView) {
         try {
             val userId = FirebaseAuth.getInstance().currentUser!!.uid
-            storageReferenceRetrieve = FirebaseStorage.getInstance().getReference("users/$userId")
+            storageReferenceRetrieve = FirebaseStorage.getInstance().getReference("users/$userId.jpeg")
             storageReferenceRetrieve.downloadUrl.addOnSuccessListener { uri ->
-                profilePic.setImageURI(uri)
+                Picasso.get().load(uri).into(profilePic)
             }.addOnFailureListener {
                 Toast.makeText(
                     this@ProfileActivity,
@@ -270,7 +271,7 @@ class ProfileActivity : AppCompatActivity(), SensorEventListener {
 
     private fun updateProfilePhoto(imagePickerPic: Uri?) {
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        storageReference = FirebaseStorage.getInstance().getReference("users/$userId.jpg")
+        storageReference = FirebaseStorage.getInstance().getReference("users/$userId.jpeg")
         if (imagePickerPic != null) {
             storageReference.putFile(imagePickerPic).addOnSuccessListener {
                 Toast.makeText(this@ProfileActivity, "Profile picture updated successfully", Toast.LENGTH_SHORT).show()
